@@ -1,1 +1,1 @@
-# Namaste_YouTube
+YouTube clone with Namaste React Series
