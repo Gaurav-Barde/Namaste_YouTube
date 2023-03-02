@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { YOUTUBE_API } from "../utils/redux/constant";
+import { YOUTUBE_API } from "../utils/constant";
 import VideoCard from "./VideoCard";
 
 const VideoContainer = () => {
@@ -19,8 +19,8 @@ const VideoContainer = () => {
   return (
     <div className="mt-5 flex flex-wrap">
       {videos.map((video) => (
-        <Link to={"watch?v="+video.id}>
-        <VideoCard key={video.id} info={video} />
+        <Link key={video.id} to={"watch?v=" + video.id}>
+          <VideoCard info={video} />
         </Link>
       ))}
     </div>
