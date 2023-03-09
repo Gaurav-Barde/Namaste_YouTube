@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { closeMenu } from "../utils/redux/menuSlice";
+import CommentsContainer from "./CommentsContainer";
 
 const WatchVideo = () => {
   const [videoData, setVideoData] = useState([]);
@@ -22,11 +23,8 @@ const WatchVideo = () => {
         "&key=AIzaSyAc1M0jU1Xf6UcXtoxdpUI-HGXCnTc90pw"
     );
     const json = await data.json();
-    // console.log(json.items[0].snippet.title, "??");
     setVideoData(json.items);
   };
-
-  console.log(videoData[0]?.snippet, "{{");
 
   return (
     <div className="p-4">
@@ -49,6 +47,7 @@ const WatchVideo = () => {
           </p>
         </>
       ) : null}
+      <CommentsContainer />
     </div>
   );
 };
