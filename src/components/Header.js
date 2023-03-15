@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { YOUTUBE_SEARCH_API } from "../utils/constant";
 import { toggleMenu } from "../utils/redux/menuSlice";
 import { cacheSuggestion } from "../utils/redux/searchSlice";
@@ -14,6 +14,7 @@ const Header = () => {
 
   const cachedSuggestions = useSelector((store) => store.search);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,6 +36,10 @@ const Header = () => {
   };
 
   const toggleMenuHandler = () => dispatch(toggleMenu());
+
+  const searchButtonHandler = () => {
+    searchQuery && navigate("results?search_query=" + searchQuery);
+  };
 
   const displaySearchResults = (suggestion) => {
     setSearchQuery(suggestion);
@@ -58,7 +63,7 @@ const Header = () => {
           />
         </Link>
       </div>
-      <div className="col-span-10 place-self-center">
+      <div className="col-span-10 place-self-center relative">
         <input
           type="text"
           ref={inputRef}
@@ -67,10 +72,36 @@ const Header = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
-          // onBlur={() => setShowSuggestions(false)}
+          onBlur={() =>
+            setTimeout(() => {
+              setShowSuggestions(false);
+            }, 150)
+          }
         />
+        {searchQuery && (
+          <button
+            className="absolute right-12 top-2"
+            onClick={() => setSearchQuery("")}
+          >
+            <img
+              className="w-7"
+              alt="close"
+              src="https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png"
+            />
+          </button>
+        )}
+        <button
+          className="border border-gray-800 bg-gray-300 rounded-r-full p-4"
+          onClick={searchButtonHandler}
+        >
+          <img
+            className="w-3"
+            alt="searh"
+            src="https://cdn-icons-png.flaticon.com/512/54/54481.png"
+          />
+        </button>
         {/* MODAL */}
-        {showSuggestions && (
+        {showSuggestions && searchQuery && (
           <div className="absolute w-96 h-60 m-1 z-10 bg-slate-50 rounded-md overflow-y-scroll">
             <ul>
               {searchSuggestions.map((suggestion, index) => (
@@ -93,14 +124,6 @@ const Header = () => {
           </div>
         )}
         {/* MODAL */}
-
-        <button className="border border-gray-800 bg-gray-300 rounded-r-full p-4">
-          <img
-            className="w-3"
-            alt="searh"
-            src="https://cdn-icons-png.flaticon.com/512/54/54481.png"
-          />
-        </button>
       </div>
       <div className="col-span-1 justify-self-end">
         <img

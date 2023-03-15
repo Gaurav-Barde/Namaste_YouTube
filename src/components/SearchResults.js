@@ -20,8 +20,8 @@ const SearchResults = () => {
 
   return (
     <div className="mt-5 flex flex-wrap">
-      {searchResults.map((video) => (
-        <Link key={video.id.videoId} to={"/watch?v=" + video.id.videoId}>
+      {searchResults.map((video, index) => (
+        <Link key={index} to={"/watch?v=" + video.id.videoId}>
           <VideoCard info={video} />
         </Link>
       ))}
