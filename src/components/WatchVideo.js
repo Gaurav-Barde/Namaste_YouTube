@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import { closeMenu } from "../utils/redux/menuSlice";
+import ChatInputBox from "./ChatInputBox";
 import CommentsContainer from "./CommentsContainer";
+import LiveChat from "./LiveChat";
 
 const WatchVideo = () => {
   const [videoData, setVideoData] = useState([]);
@@ -27,16 +29,27 @@ const WatchVideo = () => {
   };
 
   return (
-    <div className="p-4">
-      <iframe
-        width="1200"
-        height="600"
-        src={"https://www.youtube.com/embed/" + videoId + "?autoplay=1"}
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
+    <div className="p-4 w-full">
+      <div className="flex">
+        <div>
+          <iframe
+            width="1200"
+            height="600"
+            src={"https://www.youtube.com/embed/" + videoId + "?autoplay=1"}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
+        <div className="w-full h-[600px] bg-slate-50 border-2 border-slate-300 relative">
+          <h1 className="text-center font-bold text-xl p-4 text-red-500 absolute top-0 w-full bg-inherit">
+            Live Chat
+          </h1>
+          <LiveChat />
+          <ChatInputBox />
+        </div>
+      </div>
       {videoData.length ? (
         <>
           <p className="my-2 text-xl font-bold">

@@ -10,3 +10,5 @@ export const YOUTUBE_SEARCH_RESULTS_API =
   "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key=" +
   API_KEY +
   "&q=";
+
+export const LIVE_CHAT_COUNT = 10;
